@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Roll the Die!</title>
+    <style>
+  body {
+            margin: 0;
+            overflow: hidden; /* Hide scrollbars initially */
+        }
+
+        #die-container {
+            width: 100vw;
+            height: 100vh;
+            overflow: scroll; /* Enable scrolling but hide scrollbar */
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #die {
+            width: 300px; /* Adjust image size as needed */
+            height: 300px;
+        }
+        #die.shake {
+            animation: roll 0.5s ease-in-out;
+        }
+
+        @keyframes roll {
+           0% {
+                transform: rotate(0deg);
+            }
+           /* 40% {
+                transform: rotate(90deg);
+            }*/
+           /* 70% {
+                transform: rotate(180deg);
+            }*/
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+    </style>
+</head>
+<body>
+   <!--  <button onclick="rollDie()">Roll the Die</button>
+    <br> -->
+
+    <div id="die-container">
+        <img id="die" src="dice1.png" alt="Die" onclick="rollDie()">
+    </div>
+
+    <audio id="dieSound" src="die_roll.mp3" preload="auto"></audio>
+    <script>
+        function rollDie() {
+            const dieImages = [
+                "dice1.png", "dice2.png", "dice3.png",
+                "dice4.png", "dice5.png", "dice6.png"
+            ];
+            const randomIndex = Math.floor(Math.random() * dieImages.length);
+            const selectedImage = dieImages[randomIndex];
+
+            // Play sound
+            const dieSound = document.getElementById("dieSound");
+            dieSound.currentTime = 0; // Reset sound for replay
+            dieSound.play();
+
+            // Update image and animate
+            document.getElementById("die").src = selectedImage;
+            document.getElementById("die").classList.add("shake"); // Add shake class
+        }
+
+        // Remove shake class after animation
+        document.getElementById("die").addEventListener("animationend", function() {
+            this.classList.remove("shake");
+        });
+    </script>
+</body>
+</html>
